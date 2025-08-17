@@ -10,7 +10,7 @@ import adminRoutes from "./routes/admin.route.js";
 import authRoutes from "./routes/auth.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
-import statRoutes from "./routes/stat.route.js";
+import statRoutes from "./routes/statistic.route.js";
 
 dotenv.config();
 
@@ -36,22 +36,22 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
-app.use("/api/stats", statRoutes);
+app.use("/api/statistics", statRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
 	console.error("Error:", err);
-	res
-		.status(500)
-		.json({
-			message:
-				process.env.NODE_ENV === "development"
-					? err.message
-					: "Internal Server Error",
-		});
+	res.status(500).json({
+		message:
+			process.env.NODE_ENV === "development"
+				? err.message
+				: "Internal Server Error",
+	});
 });
 
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
 	connectDB();
 });
+
+// TODO: Implement Socket.io
