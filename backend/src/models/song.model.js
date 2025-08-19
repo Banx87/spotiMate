@@ -12,11 +12,11 @@ const songSchema = new mongoose.Schema(
 		},
 		album: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		genre: {
 			type: String,
-			required: true,
+			required: false,
 		},
 		imageUrl: {
 			type: String,
