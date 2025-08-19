@@ -4,9 +4,9 @@ import { buttonVariants } from "../../components/ui/button";
 import { cn } from "@/lib/utils";
 import { SignedIn } from "@clerk/clerk-react";
 import { ScrollArea } from "../../components/ui/scroll-area";
-import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton";
 import { useMusicStore } from "../../stores/useMusicStore";
 import { useEffect } from "react";
+import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton";
 
 const LeftSidebar = () => {
 	const { songs, albums, fetchAlbums, isLoading } = useMusicStore();
@@ -19,7 +19,6 @@ const LeftSidebar = () => {
 	return (
 		<div className="h-full flex flex-col gap-2">
 			{/* Navigation menu */}
-
 			<div className="rounded-lg bg-zinc-900 p-2">
 				<div className="">
 					<Link
@@ -53,7 +52,7 @@ const LeftSidebar = () => {
 				</div>
 			</div>
 
-			{/* Library section */}
+			{/* Library - Playlist - section */}
 			<div className="flex-1 rounded-lg bg-zinc-900 p-4">
 				<div className="flex items-center justify-between mb-4">
 					<div className="flex items-center text-white px-2">
@@ -64,7 +63,9 @@ const LeftSidebar = () => {
 				<ScrollArea className="h-[calc(100vh-300px)]">
 					<div className="space-y-2">
 						{isLoading ? (
-							<PlaylistSkeleton />
+							<>
+								<PlaylistSkeleton count={10} />
+							</>
 						) : (
 							albums.map((album) => (
 								<Link
