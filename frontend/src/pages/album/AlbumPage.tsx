@@ -26,7 +26,7 @@ const AlbumPage = () => {
 
 	return (
 		<div className="h-full">
-			<ScrollArea className="h-full">
+			<ScrollArea className="h-full rounded-md">
 				{/* Main Content */}
 				<div className="relative min-h-full">
 					{/* bg gradient */}
@@ -46,7 +46,7 @@ const AlbumPage = () => {
 							<div className="flex flex-col justify-end">
 								<p className="text-sm font-medium">Album</p>
 								<h1 className="text-7xl font-bold my-4">
-									{currentAlbum.title}
+									{currentAlbum?.title}
 								</h1>
 								<div className="flex items-center gap-2 text-sm text-zinc-100">
 									<span className="font-medium text-white">

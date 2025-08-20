@@ -7,7 +7,7 @@ interface MusicStore {
 	songs: Song[];
 	isLoading: boolean;
 	error: string | null;
-	currentAlbum: null;
+	currentAlbum: Album | null;
 
 	fetchAlbums: () => Promise<void>;
 	fetchAlbumById: (id: string) => Promise<Album>;
