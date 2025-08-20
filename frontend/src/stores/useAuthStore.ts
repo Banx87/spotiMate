@@ -1,0 +1,39 @@
+import { create } from "zustand";
+import { axiosInstance } from "../lib/axios";
+
+interface AuthStore {
+	isAdmin: boolean;
+	error: string | null;
+	isLoading: boolean;
+
+	checkAdminStatus: () => Promise<void>;
+	reset: () => void;
+}
+export const useAuthStore = create<AuthStore>((set) => ({
+	isAdmin: false,
+	isLoading: false,
+	error: null,
+
+	checkAdminStatus: async () => {
+		set({ isLoading: true, error: null });
+
+		try {
+			const response = await axiosInstance.get("/admin/check", {
+				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+			});
+			set({ isAdmin: response.data.admin });
+		} catch (error: any) {
+			set({ isAdmin: false });
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+
+	reset: () => {
+		set({
+			isAdmin: false,
+			error: null,
+			isLoading: false,
+		});
+	},
+}));
