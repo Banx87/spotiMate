@@ -31,7 +31,7 @@ const AlbumPage = () => {
 				<div className="relative min-h-full">
 					{/* bg gradient */}
 					<div
-						className="absolute inset-0 bg-gradient-to-b from-[#3447f0] via-zinv-900/80 to-zinc-900 pointer-events-none"
+						className="absolute inset-0 bg-gradient-to-b from-lime-300/85 to-zinc-900 pointer-events-none"
 						aria-hidden="true"
 					/>
 
@@ -67,9 +67,9 @@ const AlbumPage = () => {
 						<div className="px-6 pb-4 flex items-center gap-6">
 							<Button
 								size="icon"
-								className="size-14 rounded-full bg-green-500 hover:bg-green-400 hover:scale-105 transition-all cursor-pointer"
+								className="size-14 rounded-xl bg-zinc-900 hover:bg-black hover:scale-115 transition-all cursor-pointer"
 							>
-								<Play className="size-7 text-black  " />
+								<Play className="size-7 text-white" />
 							</Button>
 						</div>
 
