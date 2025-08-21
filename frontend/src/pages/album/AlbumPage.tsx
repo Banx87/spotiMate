@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import { useMusicStore } from "../../stores/useMusicStore";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "../../components/ui/button";
-import { Clock, Play } from "lucide-react";
+import { Music, Pause, Play } from "lucide-react";
+import { usePlayerStore } from "../../stores/usePlayerStore";
 
 const formatDuration = (duration: number) => {
 	const minutes = Math.floor(duration / 60);
@@ -15,6 +16,7 @@ const formatDuration = (duration: number) => {
 const AlbumPage = () => {
 	const { albumId } = useParams();
 	const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
+	const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
 	useEffect(() => {
 		if (albumId) {
@@ -23,6 +25,23 @@ const AlbumPage = () => {
 	}, [albumId]);
 
 	if (isLoading) return null;
+
+	const handlePlayAlbum = () => {
+		if (!currentAlbum) return;
+
+		const isCurrentlyAlbumPlaying = currentAlbum?.songs.some(
+			(song) => song._id === currentSong?._id
+		);
+		if (isCurrentlyAlbumPlaying) togglePlay();
+		else {
+			playAlbum(currentAlbum?.songs, 0);
+		}
+	};
+
+	const handlePlaySong = (index: number) => {
+		if (!currentAlbum) return;
+		playAlbum(currentAlbum?.songs, index);
+	};
 
 	return (
 		<div className="h-full">
@@ -68,8 +87,16 @@ const AlbumPage = () => {
 							<Button
 								size="icon"
 								className="size-14 rounded-xl bg-zinc-900 hover:bg-black hover:scale-115 transition-all cursor-pointer"
+								onClick={() => handlePlayAlbum()}
 							>
-								<Play className="size-7 text-white" />
+								{isPlaying &&
+								currentAlbum?.songs.some(
+									(song) => song._id === currentSong?._id
+								) ? (
+									<Pause className="size-7 text-white" />
+								) : (
+									<Play className="size-7 text-white" />
+								)}
 							</Button>
 						</div>
 
@@ -88,38 +115,53 @@ const AlbumPage = () => {
 							{/* song list */}
 							<div className="px-6">
 								<div className="space-y-2 py-4">
-									{currentAlbum?.songs.map((song, index) => (
-										<div
-											key={song._id}
-											className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer`}
-										>
-											<div className="flex items-center justify-center">
-												<span className="group-hover:hidden">{index + 1}</span>
-												<Play className="size-4 hidden group-hover:block" />
-											</div>
+									{currentAlbum?.songs.map((song, index) => {
+										const isCurrentSong = currentSong?._id === song._id;
 
-											<div className="flex items-center gap-3">
-												<img
-													src={song.imageUrl}
-													alt={song.title}
-													className="size-10"
-												/>
+										return (
+											<div
+												key={song._id}
+												onClick={() => handlePlaySong(index)}
+												className={`grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 text-sm text-zinc-400 hover:bg-white/5 rounded-md group cursor-pointer`}
+											>
+												<div className="flex items-center justify-center">
+													{isCurrentSong && isPlaying ? (
+														<div className="size-4 text-green-500">
+															<Music className="size-4" />
+														</div>
+													) : (
+														<span className="group-hover:hidden">
+															{index + 1}
+														</span>
+													)}
+													{!isCurrentSong && (
+														<Play className="size-4 hidden group-hover:block" />
+													)}
+												</div>
 
-												<div>
-													<div className="font-medium text-white">
-														{song.title}
+												<div className="flex items-center gap-3">
+													<img
+														src={song.imageUrl}
+														alt={song.title}
+														className="size-10"
+													/>
+
+													<div>
+														<div className="font-medium text-white">
+															{song.title}
+														</div>
+														<div>{song.artist}</div>
 													</div>
-													<div>{song.artist}</div>
+												</div>
+												<div className="flex items-center">
+													{song.createdAt.split("T")[0]}
+												</div>
+												<div className="flex items-center">
+													{formatDuration(song.duration)}
 												</div>
 											</div>
-											<div className="flex items-center">
-												{song.createdAt.split("T")[0]}
-											</div>
-											<div className="flex items-center">
-												{formatDuration(song.duration)}
-											</div>
-										</div>
-									))}
+										);
+									})}
 								</div>
 							</div>
 						</div>

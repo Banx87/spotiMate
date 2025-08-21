@@ -4,7 +4,7 @@ export interface Song {
 	artist: string;
 	albumId: string | null;
 	imageUrl: string;
-	aurdioUrl: string;
+	audioUrl: string;
 	duration: number;
 	createdAt: string;
 	updatedAt: string;
