@@ -5,10 +5,10 @@ import { useParams } from "react-router-dom";
 import { useMusicStore } from "../../stores/useMusicStore";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "../../components/ui/button";
-import { Music, Pause, Play } from "lucide-react";
+import { Clock, Music, Pause, Play } from "lucide-react";
 import { usePlayerStore } from "../../stores/usePlayerStore";
 
-const formatDuration = (duration: number) => {
+export const formatDuration = (duration: number) => {
 	const minutes = Math.floor(duration / 60);
 	const seconds = duration % 60;
 	return `${minutes}:${seconds < 2 ? "0" : ""}${seconds}`;
