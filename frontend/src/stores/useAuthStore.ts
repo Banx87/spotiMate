@@ -18,9 +18,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
 		set({ isLoading: true, error: null });
 
 		try {
-			const response = await axiosInstance.get("/admin/check", {
-				headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-			});
+			const response = await axiosInstance.get("/admin/check");
 			set({ isAdmin: response.data.admin });
 		} catch (error: any) {
 			set({ isAdmin: false });

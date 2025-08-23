@@ -11,7 +11,7 @@ const updateApiToken = (token: string | null) => {
 };
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const { getToken, userId } = useAuth();
+	const { getToken } = useAuth();
 	const [loading, setLoading] = useState(true);
 	const { checkAdminStatus } = useAuthStore();
 
@@ -20,7 +20,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			try {
 				const token = await getToken();
 				updateApiToken(token);
-
 				if (token) {
 					await checkAdminStatus();
 				}
