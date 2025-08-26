@@ -1,17 +1,31 @@
 import { Song } from "../models/song.model.js";
 import { Album } from "../models/album.model.js";
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
+import { unlink } from "fs";
 
 // Helper function for cloudinary uploads
 const uploadToCloudinary = async (file) => {
 	try {
+		let folder = "images";
+		if (file.mimetype === "audio/mpeg") {
+			folder = "audio";
+		}
+
 		const result = await cloudinary.uploader.upload(file.tempFilePath, {
+			use_filename: true,
+			unique_filename: true,
+			folder: folder,
 			resource_type: "auto",
 		});
 		return result.secure_url;
 	} catch (error) {
-		console.log("Error uploading to Cloudinary:", error);
+		console.log("Error uploading Image to Cloudinary:", error);
 		throw new Error("Cloudinary upload failed");
+	} finally {
+		// Delete the temporary file
+		unlink(file.tempFilePath, (err) => {
+			console.log(err);
+		});
 	}
 };
 
@@ -20,13 +34,13 @@ export const createSong = async (req, res, next) => {
 		if (!req.files || !req.files.audioFile || !req.files.imageFile) {
 			return res.status(400).send("All files are required");
 		}
-
 		const { title, artist, albumId, duration } = req.body;
+
 		const audioFile = req.files.audioFile;
 		const imageFile = req.files.imageFile;
 
-		const audioUrl = await uploadToCloudinary(audioFile);
 		const imageUrl = await uploadToCloudinary(imageFile);
+		const audioUrl = await uploadToCloudinary(audioFile);
 
 		const song = new Song({
 			title,
