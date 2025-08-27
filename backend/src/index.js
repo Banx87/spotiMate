@@ -12,12 +12,25 @@ import authRoutes from "./routes/auth.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/statistic.route.js";
+import { v2 as cloudinary } from "cloudinary";
+import { createServer } from "http";
+import { initializeSocket } from "./lib/socket.js";
 
 dotenv.config();
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const __dirname = path.resolve();
 const app = express();
 const PORT = process.env.PORT || 8000;
+
+const httpServer = createServer(app);
+
+initializeSocket(httpServer);
 
 app.use(
 	cors({
@@ -57,9 +70,7 @@ app.use((err, req, res, next) => {
 	});
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}`);
 	connectDB();
 });
-
-// TODO: Implement Socket.io
