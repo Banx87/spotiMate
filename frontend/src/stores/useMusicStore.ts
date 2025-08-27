@@ -77,9 +77,9 @@ export const useMusicStore = create<MusicStore>((set, get) => ({
 						: song
 				),
 			}));
-			toast.success("Song deleted successfully");
+			toast.success("Album deleted successfully");
 		} catch (error: any) {
-			toast.error("Error deleting song: " + error.response.data.message);
+			toast.error("Error deleting album: " + error.response.data.message);
 		} finally {
 			set({ isLoading: false });
 		}
