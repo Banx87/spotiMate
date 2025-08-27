@@ -12,7 +12,7 @@ const FeaturedGridSkeleton = ({ count }: { count: number }) => {
 					>
 						<Skeleton className="w-16 sm:w-20 h-16 sm:h-20 bg-zinc-700 flex-shrink-0" />
 						<div className="flex-1 p-4">
-							<Skeleton className="h-4 bg-zinv-700 rounded w-3/4 mb-2" />
+							<Skeleton className="h-4 bg-zinc-700 rounded w-3/4 mb-2" />
 						</div>
 					</div>
 				))}
