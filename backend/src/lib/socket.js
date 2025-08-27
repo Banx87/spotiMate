@@ -1,5 +1,4 @@
 import { Server } from "socket.io";
-
 export const initializeSocket = (server) => {
 	const io = new Server(server, {
 		cors: {
@@ -38,7 +37,7 @@ export const initializeSocket = (server) => {
 					content,
 				});
 
-				// Sned to receiver in real time, if they're online
+				// Send to receiver in real time, if they're online
 				const receiverSocketId = userSockets.get(receiverId);
 				if (receiverSocketId) {
 					io.to(receiverSocketId).emit("receive_message", message);
