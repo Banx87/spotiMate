@@ -5,6 +5,8 @@ import fileUpload from "express-fileupload";
 import path from "path";
 import cors from "cors";
 import { connectDB } from "./lib/db.js";
+import { cron } from "node-cron";
+import fs from "fs";
 
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -51,6 +53,23 @@ app.use(
 		},
 	})
 );
+
+// cron jobs
+// DELETE TEMP FILES EVERY HOUR
+const tempDir = path.join(process.cwd(), "tmp");
+cron.schedule("0 * * * *", () => {
+	if (fs.existsSync(tempDir)) {
+		fs.readdir(tempDir, (err, files) => {
+			if (err) {
+				console.log("error", err);
+				return;
+			}
+			for (const file of files) {
+				fs.unlink(path.join(tempDir, file), (err) => {});
+			}
+		});
+	}
+});
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
