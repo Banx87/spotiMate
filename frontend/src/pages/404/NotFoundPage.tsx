@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Home, HomeIcon, Music2Icon } from "lucide-react";
+import { HomeIcon, Music2Icon } from "lucide-react";
 import { Button } from "../../components/ui/button";
 
 export default function NotFoundPage() {

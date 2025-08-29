@@ -1,7 +1,7 @@
 import { HomeIcon, LibraryIcon, MessageCircleIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "../../components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { SignedIn } from "@clerk/clerk-react";
 import { ScrollArea } from "../../components/ui/scroll-area";
 import { useMusicStore } from "../../stores/useMusicStore";
@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import PlaylistSkeleton from "../../components/skeletons/PlaylistSkeleton";
 
 const LeftSidebar = () => {
-	const { songs, albums, fetchAlbums, isLoading } = useMusicStore();
+	const { albums, fetchAlbums, isLoading } = useMusicStore();
 
 	useEffect(() => {
 		fetchAlbums();

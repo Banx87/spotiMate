@@ -14,7 +14,7 @@ import { useMusicStore } from "../../stores/useMusicStore";
 import { useEffect } from "react";
 
 const AdminPage = () => {
-	const { isAdmin, error, isLoading } = useAuthStore();
+	const { isAdmin, isLoading } = useAuthStore();
 
 	const { fetchAlbums, fetchSongs, fetchStats } = useMusicStore();
 

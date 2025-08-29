@@ -55,8 +55,7 @@ const AlbumsTable = () => {
 						<TableCell>{album.artist}</TableCell>
 						<TableCell>
 							<span className="inline-flex items-center gap-1 text-zinc-400">
-								<Calendar1Icon className="size-4" />{" "}
-								{album.createdAt.split("-")[0]}
+								<Calendar1Icon className="size-4" /> {album.releaseYear}
 							</span>
 						</TableCell>
 						<TableCell className="text-zinc-400">
