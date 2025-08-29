@@ -35,7 +35,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 	isLoading: false,
 	error: null,
 
-	socket: null,
+	socket: socket,
 	isConnected: false,
 	onlineUsers: new Set(),
 	userActivities: new Map(),
@@ -123,10 +123,15 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 	fetchMessages: async (userId: string) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axiosInstance.get(`/users//messages/${userId}`);
+			const response = await axiosInstance.get(`/users/messages/${userId}`);
+
+			if (response.status !== 200) {
+				throw response;
+			}
+
 			set({ messages: response.data });
 		} catch (error: any) {
-			set({ error: error.response.data.message });
+			set({ error: error.response?.data?.message || "Internal server error" });
 		} finally {
 			set({ isLoading: false });
 		}

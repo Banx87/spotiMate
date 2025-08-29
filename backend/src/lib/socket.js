@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import { Message } from "../models/message.model.js";
 export const initializeSocket = (server) => {
 	const io = new Server(server, {
 		cors: {
@@ -23,9 +24,9 @@ export const initializeSocket = (server) => {
 			io.emit("activities", Array.from(userActivities.entries()));
 		});
 
-		socket.on("update_activity", (userId, activity) => {
+		socket.on("update_activity", ({ userId, activity }) => {
 			userActivities.set(userId, activity);
-			io.emit("acitivity_updated, {userId, activity");
+			io.emit(`activity_updated`, { userId, activity });
 		});
 
 		socket.on("send_message", async (data) => {
