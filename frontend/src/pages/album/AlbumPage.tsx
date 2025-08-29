@@ -44,13 +44,13 @@ const AlbumPage = () => {
 	};
 
 	return (
-		<div className="h-full">
+		<div className="h-full ">
 			<ScrollArea className="h-full rounded-md">
 				{/* Main Content */}
 				<div className="relative min-h-full">
 					{/* bg gradient */}
 					<div
-						className="absolute inset-0 bg-gradient-to-b from-lime-300/85 to-zinc-900 pointer-events-none"
+						className="absolute rounded-lg inset-0 bg-gradient-to-b from-lime-300/85 to-zinc-900 pointer-events-none"
 						aria-hidden="true"
 					/>
 

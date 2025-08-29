@@ -34,7 +34,7 @@ const SongsTable = () => {
 					<TableHead className="w-[50px]"></TableHead>
 					<TableHead>Title</TableHead>
 					<TableHead>Artist</TableHead>
-					<TableHead>Album</TableHead>
+					{/* <TableHead>Album</TableHead> */}
 					<TableHead>Release Date</TableHead>
 					<TableHead className="text-right">Actions</TableHead>
 				</TableRow>
@@ -52,7 +52,7 @@ const SongsTable = () => {
 						</TableCell>
 						<TableCell>{song.title}</TableCell>
 						<TableCell>{song.artist}</TableCell>
-						<TableCell>{song.album}</TableCell>
+						{/* <TableCell>{song.albumId}</TableCell> */}
 						<TableCell>
 							<span className="inline-flex items-center gap-1 text-zinc-400">
 								<Calendar1Icon className="size-4" />{" "}
